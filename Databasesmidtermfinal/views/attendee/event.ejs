@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/attendee.css">
+</head>
+
+<body>
+    <%- include('../partials/header', { currentPage: currentPage }) %>
+
+        <main class="attendee-page attendee-page-narrow">
+            <section class="attendee-event-detail">
+                <p class="academy-label">Harmony Hub Music Academy</p>
+                <h1>Attendee Event Page</h1>
+
+                <% if (bookingSuccess) { %>
+                    <p class="success-banner">Your tickets are booked! Details are shown below.</p>
+                    <% } %>
+
+                        <% if (waitlistSuccess) { %>
+                            <p class="success-banner">You're on the waiting list — we'll allocate tickets automatically
+                                if any become available.</p>
+                            <% } %>
+
+                                <div class="site-info-card">
+                                    <h2>
+                                        <%= event.event_title %>
+                                    </h2>
+                                    <p class="attendee-event-detail-date">
+                                        <%= new Date(event.event_date).toLocaleDateString(undefined, { weekday: 'long' ,
+                                            day: 'numeric' , month: 'long' , year: 'numeric' }) %>
+                                    </p>
+                                    <p>
+                                        <%= event.event_description %>
+                                    </p>
+
+                                    <div class="ticket-price-grid">
+                                        <div class="ticket-price-card">
+                                            <span class="ticket-price-label">Full-price</span>
+                                            <span class="ticket-price-amount">£<%=
+                                                    event.full_price_ticket_price.toFixed(2) %></span>
+                                            <span class="ticket-price-remaining">
+                                                <%= remainingFull %> remaining
+                                            </span>
+                                        </div>
+                                        <div class="ticket-price-card">
+                                            <span class="ticket-price-label">Concession</span>
+                                            <span class="ticket-price-amount">£<%=
+                                                    event.concession_ticket_price.toFixed(2) %></span>
+                                            <span class="ticket-price-remaining">
+                                                <%= remainingConcession %> remaining
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% if (remainingFull===0 && remainingConcession===0) { %>
+                                    <p class="empty-state">This event is fully booked — no tickets remaining right now.
+                                    </p>
+                                    <% } else { %>
+                                        <form action="/attendee/event/<%= event.event_id %>/book" method="POST"
+                                            class="organiser-form booking-form">
+                                            <h3 class="booking-form-title">Book Your Tickets</h3>
+
+                                            <label for="attendee_name">Your name</label>
+                                            <input type="text" id="attendee_name" name="attendee_name" required>
+
+                                            <div class="ticket-field-group">
+                                                <div class="ticket-field">
+                                                    <label for="full_price_ticket_qty">
+                                                        Full-price tickets (£<%=
+                                                            event.full_price_ticket_price.toFixed(2) %> each)
+                                                    </label>
+                                                    <input type="number" id="full_price_ticket_qty"
+                                                        name="full_price_ticket_qty" value="0" min="0"
+                                                        max="<%= remainingFull %>" <% if (remainingFull===0) {
+                                                        %>disabled<% } %>
+                                                        >
+                                                </div>
+
+                                                <div class="ticket-field">
+                                                    <label for="concession_ticket_qty">
+                                                        Concession tickets (£<%=
+                                                            event.concession_ticket_price.toFixed(2) %> each)
+                                                    </label>
+                                                    <input type="number" id="concession_ticket_qty"
+                                                        name="concession_ticket_qty" value="0" min="0"
+                                                        max="<%= remainingConcession %>" <% if (remainingConcession===0)
+                                                        { %>disabled<% } %>
+                                                        >
+                                                </div>
+                                            </div>
+
+                                            <div class="form-actions">
+                                                <button type="submit" class="button primary-button">Book
+                                                    Tickets</button>
+                                            </div>
+                                        </form>
+                                        <% } %>
+
+                                            <% if (remainingFull===0 || remainingConcession===0) { %>
+                                                <div class="waitlist-card">
+                                                    <h3>Join The Waiting List</h3>
+                                                    <p class="waitlist-intro">
+                                                        <% if (remainingFull===0 && remainingConcession===0) { %>
+                                                            Both ticket types are sold out. Join the waiting list and
+                                                            we'll
+                                                            automatically book you in if a spot opens up from a
+                                                            cancellation.
+                                                            <% } else { %>
+                                                                <%= remainingFull===0 ? 'Full-price' : 'Concession' %>
+                                                                    tickets are sold out.
+                                                                    Join the waiting list and we'll automatically book
+                                                                    you in if a spot opens up.
+                                                                    <% } %>
+                                                    </p>
+
+                                                    <form action="/attendee/event/<%= event.event_id %>/waitlist"
+                                                        method="POST" class="organiser-form waitlist-form">
+                                                        <label for="waitlist_attendee_name">Your name</label>
+                                                        <input type="text" id="waitlist_attendee_name"
+                                                            name="attendee_name" required>
+
+                                                        <label for="ticket_type">Ticket type</label>
+                                                        <select id="ticket_type" name="ticket_type" required>
+                                                            <% if (remainingFull===0) { %>
+                                                                <option value="full">Full-price</option>
+                                                                <% } %>
+                                                                    <% if (remainingConcession===0) { %>
+                                                                        <option value="concession">Concession</option>
+                                                                        <% } %>
+                                                        </select>
+
+                                                        <label for="quantity">How many tickets</label>
+                                                        <input type="number" id="quantity" name="quantity" value="1"
+                                                            min="1" required>
+
+                                                        <div class="form-actions">
+                                                            <button type="submit" class="button secondary-button">Join
+                                                                Waiting List</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <% } %>
+            </section>
+
+            <a href="/attendee" class="button secondary-button small-button back-button">
+                &larr; Back to Attendee Home
+            </a>
+        </main>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

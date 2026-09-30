@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/attendee.css">
+</head>
+
+<body>
+    <%- include('../partials/header', { currentPage: currentPage }) %>
+
+        <main class="attendee-page">
+            <section class="attendee-intro">
+                <h1>Attendee Home Page</h1>
+
+                <div class="site-info-card">
+                    <h2>
+                        <%= settings.site_name %>
+                    </h2>
+                    <p>
+                        <%= settings.site_description %>
+                    </p>
+                </div>
+            </section>
+
+            <section class="attendee-list-section">
+                <h2>Upcoming Events</h2>
+
+                <% if (events.length===0) { %>
+                    <p class="empty-state">No events are published yet — check back soon.</p>
+                    <% } else { %>
+                        <div class="attendee-event-list">
+                            <% events.forEach(function(event) { %>
+                                <a href="/attendee/event/<%= event.event_id %>" class="attendee-event-item">
+                                    <span class="attendee-event-date">
+                                        <%= new Date(event.event_date).toLocaleDateString(undefined, { day: 'numeric' ,
+                                            month: 'short' , year: 'numeric' }) %>
+                                    </span>
+                                    <span class="attendee-event-title">
+                                        <%= event.event_title %>
+                                    </span>
+                                    <span class="attendee-event-arrow" aria-hidden="true">&rarr;</span>
+                                </a>
+                                <% }); %>
+                        </div>
+                        <% } %>
+            </section>
+        </main>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

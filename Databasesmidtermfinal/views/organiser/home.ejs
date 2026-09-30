@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/organiser.css">
+</head>
+
+<body>
+    <%- include('../partials/header', { currentPage: currentPage }) %>
+
+        <main class="organiser-page">
+            <section class="organiser-intro">
+                <h1>Organiser Home Page</h1>
+
+                <div class="site-info-card">
+                    <h2>
+                        <%= settings.site_name %>
+                    </h2>
+                    <p>
+                        <%= settings.site_description %>
+                    </p>
+                    <a href="/organiser/settings" class="button secondary-button small-button">
+                        Site Settings
+                    </a>
+                </div>
+
+                <form action="/organiser/event/new" method="POST">
+                    <button type="submit" class="button primary-button">
+                        + Create New Event
+                    </button>
+                </form>
+            </section>
+
+            <section class="organiser-list-section">
+                <h2>Published Events</h2>
+
+                <% if (publishedEvents.length===0) { %>
+                    <p class="empty-state">No events published yet.</p>
+                    <% } else { %>
+                        <div class="event-list">
+                            <% publishedEvents.forEach(function(event) { %>
+                                <article class="organiser-event-card">
+                                    <div class="organiser-event-main">
+                                        <span class="status-badge status-published">Published</span>
+                                        <h3>
+                                            <%= event.event_title %>
+                                        </h3>
+
+                                        <ul class="event-meta">
+                                            <li>Event date: <%= new Date(event.event_date).toLocaleDateString() %>
+                                            </li>
+                                            <li>Created: <%= new Date(event.created_at).toLocaleDateString() %>
+                                            </li>
+                                            <li>Published: <%= new Date(event.published_at).toLocaleDateString() %>
+                                            </li>
+                                            <li>Full-price tickets: <%= event.full_price_ticket_qty %>
+                                            </li>
+                                            <li>Concession tickets: <%= event.concession_ticket_qty %>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="organiser-event-actions">
+                                        <a href="/attendee/event/<%= event.event_id %>" class="share-link">
+                                            View attendee page &rarr;
+                                        </a>
+
+                                        <a href="/organiser/event/<%= event.event_id %>/bookings" class="share-link">
+                                            Manage bookings &rarr;
+                                        </a>
+
+                                        <form action="/organiser/event/<%= event.event_id %>/delete" method="POST"
+                                            onsubmit="return confirm('Delete this event? This cannot be undone.');">
+                                            <button type="submit" class="button danger-button">Delete</button>
+                                        </form>
+                                    </div>
+                                </article>
+                                <% }); %>
+                        </div>
+                        <% } %>
+            </section>
+
+            <section class="organiser-list-section">
+                <h2>Draft Events</h2>
+
+                <% if (draftEvents.length===0) { %>
+                    <p class="empty-state">No draft events right now.</p>
+                    <% } else { %>
+                        <div class="event-list">
+                            <% draftEvents.forEach(function(event) { %>
+                                <article class="organiser-event-card">
+                                    <div class="organiser-event-main">
+                                        <span class="status-badge status-draft">Draft</span>
+                                        <h3>
+                                            <%= event.event_title %>
+                                        </h3>
+
+                                        <ul class="event-meta">
+                                            <li>Event date: <%= new Date(event.event_date).toLocaleDateString() %>
+                                            </li>
+                                            <li>Created: <%= new Date(event.created_at).toLocaleDateString() %>
+                                            </li>
+                                            <li>Last modified: <%= new Date(event.last_modified_at).toLocaleDateString()
+                                                    %>
+                                            </li>
+                                            <li>Full-price tickets: <%= event.full_price_ticket_qty %>
+                                            </li>
+                                            <li>Concession tickets: <%= event.concession_ticket_qty %>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="organiser-event-actions">
+                                        <a href="/organiser/event/<%= event.event_id %>/edit"
+                                            class="button secondary-button small-button">
+                                            Edit
+                                        </a>
+
+                                        <form action="/organiser/event/<%= event.event_id %>/publish" method="POST">
+                                            <button type="submit"
+                                                class="button primary-button small-button">Publish</button>
+                                        </form>
+
+                                        <form action="/organiser/event/<%= event.event_id %>/delete" method="POST"
+                                            onsubmit="return confirm('Delete this draft? This cannot be undone.');">
+                                            <button type="submit" class="button danger-button">Delete</button>
+                                        </form>
+                                    </div>
+                                </article>
+                                <% }); %>
+                        </div>
+                        <% } %>
+            </section>
+        </main>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

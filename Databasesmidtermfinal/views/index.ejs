@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%# pageTitle is passed in from the route, e.g. res.render('index', { pageTitle: '...' }) %>
+        <title>
+            <%= pageTitle %>
+        </title>
+
+        <link rel="stylesheet" href="/main.css">
+</head>
+
+<body>
+    <%- include('partials/header', { currentPage: 'home' }) %>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <p class="academy-label">
+                        <%= settings.site_name %>
+                    </p>
+
+                    <h1>Learn. Perform. Inspire.</h1>
+
+                    <p class="hero-description">
+                        <%= settings.site_description %>
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="/attendee" class="button primary-button">
+                            Explore Events
+                        </a>
+
+                        <a href="/organiser" class="button secondary-button">
+                            Organiser Portal
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="events-section">
+                <div class="section-heading">
+                    <p>Discover Harmony Hub</p>
+                    <h2>Learn and experience music</h2>
+                </div>
+
+                <div class="event-grid">
+                    <%# highlights is an array of { icon, title, description } passed in from the route. %>
+                        <%# Looping here means adding/reordering a highlight only requires editing the route's data, not
+                            this markup. %>
+                            <% highlights.forEach(function(item) { %>
+                                <article class="event-card">
+                                    <span class="event-icon" aria-hidden="true">
+                                        <%= item.icon %>
+                                    </span>
+                                    <h3>
+                                        <%= item.title %>
+                                    </h3>
+                                    <p>
+                                        <%= item.description %>
+                                    </p>
+                                </article>
+                                <% }); %>
+                </div>
+            </section>
+
+            <section class="portal-section">
+                <div class="section-heading">
+                    <p>Get started</p>
+                    <h2>Choose your portal</h2>
+                </div>
+
+                <div class="portal-grid">
+                    <article class="portal-card">
+                        <span class="portal-icon" aria-hidden="true">🎵</span>
+                        <h3>Attendee Portal</h3>
+                        <p>
+                            Browse upcoming classes, concerts, recitals and
+                            performances.
+                        </p>
+                        <a href="/attendee" class="button primary-button">
+                            Explore Events
+                        </a>
+                    </article>
+
+                    <article class="portal-card">
+                        <span class="portal-icon" aria-hidden="true">🎛️</span>
+                        <h3>Organiser Portal</h3>
+                        <p>
+                            Create, edit, publish and manage all academy events.
+                        </p>
+                        <a href="/organiser" class="button primary-button">
+                            Manage Events
+                        </a>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <%- include('partials/footer') %>
+</body>
+
+</html>

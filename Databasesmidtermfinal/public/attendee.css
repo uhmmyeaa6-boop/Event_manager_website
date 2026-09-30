@@ -1,0 +1,227 @@
+/**
+ * attendee.css
+ * Styles for the Attendee Home Page and Attendee Event Page.
+ */
+
+.attendee-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 6% 100px;
+    color: #101827;
+    background-color: #f8fafc;
+}
+
+.attendee-page-narrow {
+    max-width: 680px;
+}
+
+.attendee-event-detail .academy-label {
+    margin-bottom: 6px;
+}
+
+.attendee-event-detail h1 {
+    margin-top: 0;
+}
+
+.attendee-intro h1,
+.attendee-event-detail h1 {
+    color: #101827;
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+}
+
+.attendee-list-section {
+    margin-top: 50px;
+}
+
+.attendee-list-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+.attendee-event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.attendee-event-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    text-decoration: none;
+    color: #101827;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.attendee-event-item:hover {
+    transform: translateY(-2px);
+    border-color: #f4c95d;
+}
+
+.attendee-event-date {
+    min-width: 130px;
+    font-weight: 700;
+    color: #b8860b;
+}
+
+.attendee-event-title {
+    flex: 1;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.attendee-event-arrow {
+    color: #94a3b8;
+}
+
+.attendee-event-detail-date {
+    color: #b8860b;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.ticket-price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 26px;
+}
+
+.ticket-price-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.ticket-price-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b8860b;
+}
+
+.ticket-price-amount {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #101827;
+}
+
+.ticket-price-remaining {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+@media (max-width: 600px) {
+    .ticket-price-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.booking-form {
+    margin-top: 24px;
+}
+
+.success-banner {
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.attendee-page .secondary-button {
+    border-color: #101827;
+    color: #101827;
+}
+
+.waitlist-card {
+    margin-top: 24px;
+    padding: 30px;
+    background-color: #fffbeb;
+    border: 1px solid #f4c95d;
+    border-left: 5px solid #f4c95d;
+    border-radius: 14px;
+}
+
+.waitlist-card h3 {
+    margin: 0 0 8px;
+    color: #92400e;
+    font-size: 1.3rem;
+}
+
+.waitlist-intro {
+    color: #78716c;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.waitlist-form {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    gap: 16px;
+}
+
+.waitlist-form label {
+    margin-top: 0;
+    color: #92400e;
+}
+
+.waitlist-form .form-actions {
+    margin-top: 10px;
+}
+
+.waitlist-form .form-actions .button {
+    width: 100%;
+    text-align: center;
+    padding: 14px 24px;
+}
+
+.booking-form-title {
+    margin: 0 0 4px;
+    color: #b8860b;
+    font-size: 1.2rem;
+}
+
+.booking-form .ticket-field-group {
+    margin-top: 8px;
+}
+
+.booking-form .ticket-field {
+    padding: 14px 16px;
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.booking-form .ticket-field label {
+    margin-top: 0;
+    display: block;
+    font-size: 0.85rem;
+}
+
+.booking-form .form-actions {
+    margin-top: 26px;
+}
+
+.booking-form .form-actions .button {
+    width: 100%;
+    text-align: center;
+    padding: 14px 24px;
+}

@@ -1,0 +1,12 @@
+<header class="navbar">
+    <a href="/" class="logo">Harmony Hub</a>
+
+    <nav>
+        <%# currentPage is passed in from each route's res.render() call, %>
+            <%# e.g. res.render('index', { currentPage: 'home' }) %>
+                <a href="/" class="<%= currentPage === 'home' ? 'active-link' : '' %>">Home</a>
+                <a href="/attendee" class="<%= currentPage === 'attendee' ? 'active-link' : '' %>">Explore Events</a>
+                <a href="/organiser" class="<%= currentPage === 'organiser' ? 'active-link' : '' %>">Organiser
+                    Portal</a>
+    </nav>
+</header>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/organiser.css">
+</head>
+
+<body>
+    <%- include('../partials/header', { currentPage: currentPage }) %>
+
+        <main class="organiser-page">
+            <section class="organiser-intro">
+                <h1>Manage Bookings</h1>
+                <p class="event-created-date">
+                    <%= event.event_title %>
+                </p>
+            </section>
+
+            <section class="organiser-list-section">
+                <h2>Bookings</h2>
+
+                <% if (bookings.length===0) { %>
+                    <p class="empty-state">No one has booked this event yet.</p>
+                    <% } else { %>
+                        <div class="event-list">
+                            <% bookings.forEach(function(booking) { %>
+                                <article class="organiser-event-card">
+                                    <div class="organiser-event-main">
+                                        <h3>
+                                            <%= booking.attendee_name %>
+                                        </h3>
+                                        <ul class="event-meta">
+                                            <li>Full-price tickets: <%= booking.full_price_ticket_qty %>
+                                            </li>
+                                            <li>Concession tickets: <%= booking.concession_ticket_qty %>
+                                            </li>
+                                            <li>Booked: <%= new Date(booking.booked_at).toLocaleDateString() %>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="organiser-event-actions">
+                                        <form
+                                            action="/organiser/event/<%= event.event_id %>/bookings/<%= booking.booking_id %>/cancel"
+                                            method="POST"
+                                            onsubmit="return confirm('Cancel this booking? Freed tickets will be offered to the waiting list automatically.');">
+                                            <button type="submit" class="button danger-button">Cancel Booking</button>
+                                        </form>
+                                    </div>
+                                </article>
+                                <% }); %>
+                        </div>
+                        <% } %>
+            </section>
+
+            <section class="organiser-list-section">
+                <h2>Waiting List</h2>
+
+                <% if (waitlist.length===0) { %>
+                    <p class="empty-state">No one is currently waiting for this event.</p>
+                    <% } else { %>
+                        <div class="event-list">
+                            <% waitlist.forEach(function(entry) { %>
+                                <article class="organiser-event-card">
+                                    <div class="organiser-event-main">
+                                        <span
+                                            class="status-badge <%= entry.status === 'allocated' ? 'status-published' : 'status-draft' %>">
+                                            <%= entry.status==='allocated' ? 'Allocated' : 'Waiting' %>
+                                        </span>
+                                        <h3>
+                                            <%= entry.attendee_name %>
+                                        </h3>
+                                        <ul class="event-meta">
+                                            <li>Ticket type: <%= entry.ticket_type==='full' ? 'Full-price'
+                                                    : 'Concession' %>
+                                            </li>
+                                            <li>Quantity: <%= entry.quantity %>
+                                            </li>
+                                            <li>Joined: <%= new Date(entry.joined_at).toLocaleDateString() %>
+                                            </li>
+                                            <% if (entry.status==='allocated' ) { %>
+                                                <li>Allocated: <%= new Date(entry.allocated_at).toLocaleDateString() %>
+                                                </li>
+                                                <% } %>
+                                        </ul>
+                                    </div>
+                                </article>
+                                <% }); %>
+                        </div>
+                        <% } %>
+            </section>
+
+            <a href="/organiser" class="button secondary-button small-button back-button">
+                &larr; Back to Organiser Home
+            </a>
+        </main>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/organiser.css">
+</head>
+
+<body>
+    <%- include('../partials/header', { currentPage: currentPage }) %>
+
+        <main class="organiser-page">
+            <section class="organiser-form-section settings-page">
+                <p class="academy-label">Harmony Hub Music Academy</p>
+                <h1>Site Settings Page</h1>
+
+                <div class="settings-grid">
+                    <form action="/organiser/settings" method="POST" class="organiser-form">
+                        <label for="site_name">Site name</label>
+                        <input type="text" id="site_name" name="site_name" value="<%= settings.site_name %>" required>
+
+                        <label for="site_description">Site description</label>
+                        <textarea id="site_description" name="site_description" rows="4"
+                            required><%= settings.site_description %></textarea>
+
+                        <div class="form-actions">
+                            <button type="submit" class="button primary-button">Save Settings</button>
+                        </div>
+                    </form>
+
+                    <div class="settings-preview">
+                        <p class="academy-label">Preview</p>
+                        <h2>
+                            <%= settings.site_name %>
+                        </h2>
+                        <p>
+                            <%= settings.site_description %>
+                        </p>
+                        <p class="settings-preview-note">This is how your site name and description currently appear to
+                            attendees on the homepage and Attendee Home Page.</p>
+                    </div>
+                </div>
+
+                <a href="/organiser" class="button secondary-button small-button back-button">
+                    &larr; Back to Organiser Home
+                </a>
+            </section>
+        </main>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>
